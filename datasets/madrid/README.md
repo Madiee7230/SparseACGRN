@@ -1,8 +1,7 @@
 # Madrid Traffic Dataset
 
-Source: Gómez, Iván and Ilarri, Sergio (2026).
-Enriched Traffic Datasets for Madrid, Mendeley Data, Version 4.
-https://doi.org/10.17632/697ht4f65b.4
+Gómez, Iván; Ilarri, Sergio (2026), “Enriched Traffic Datasets for Madrid”, Mendeley Data, V4, doi: 10.17632/697ht4f65b.4
+https://data.mendeley.com/datasets/697ht4f65b/4
 
 License: CC BY 4.0
 
