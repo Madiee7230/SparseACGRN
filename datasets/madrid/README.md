@@ -8,7 +8,7 @@ License: CC BY 4.0
 
 We use the 300-sensor Madrid subset for traffic forecasting.
 
-raw/ contains the original extracted dataset files.
-processed/ contains the data prepared for our experiments.
+- raw/ contains the original extracted dataset files.
+- processed/ contains the data prepared for our experiments.
 
 The preprocessing code is in experiments/prepare_madrid.py.
