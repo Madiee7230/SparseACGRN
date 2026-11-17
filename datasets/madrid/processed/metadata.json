@@ -1,0 +1,8 @@
+{
+  "mean": 586.70947265625,
+  "std": 573.3944091796875,
+  "num_sensors": 300,
+  "history": 12,
+  "horizon": 12,
+  "interval_minutes": 60
+}
