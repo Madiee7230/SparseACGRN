@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from model.SparseAGCRN.SparseAGCRNCell import SparseAGCRNCell
+from model.FeatureSparseAGCRN.SparseAGCRNCell import SparseAGCRNCell
 
 class SparseAVWDCRNN(nn.Module):
     def __init__(self, node_num, dim_in, dim_out, cheb_k, embed_dim, num_layers=1):
@@ -41,9 +41,9 @@ class SparseAVWDCRNN(nn.Module):
         return torch.stack(init_states, dim=0)      #(num_layers, B, N, hidden_dim)
     
 
-class SparseAGCRN(nn.Module):
+class FeatureSparseAGCRN(nn.Module):
     def __init__(self, args):
-        super(SparseAGCRN, self).__init__()
+        super(FeatureSparseAGCRN, self).__init__()
         self.num_node = args.num_nodes
         self.input_dim = args.input_dim
         self.hidden_dim = args.rnn_units
@@ -75,7 +75,7 @@ class SparseAGCRN(nn.Module):
         #supports = F.softmax(F.relu(torch.mm(self.nodevec1, self.nodevec1.transpose(0,1))), dim=1)
 
         # NEW
-        limiting_ks = self.limiting_k_mlp(self.node_location_features)
+        limiting_ks = self.limiting_k_mlp(self.node_location_features)   # (N, 1)
 
         init_state = self.encoder.init_hidden(source.shape[0])
         output, _ = self.encoder(source, init_state, self.node_embeddings, limiting_ks)      #B, T, N, hidden

@@ -1,20 +1,20 @@
 import torch
 import torch.nn as nn
-from model.BaseAGCRN.AGCRNCell import AGCRNCell
+from model.FixedSparseAGCRN.FixedSparseAGCRNCell import FixedSparseAGCRNCell
 
-class AVWDCRNN(nn.Module):
+class FixedSparseAVWDCRNN(nn.Module):
     def __init__(self, node_num, dim_in, dim_out, cheb_k, embed_dim, num_layers=1):
-        super(AVWDCRNN, self).__init__()
+        super(FixedSparseAVWDCRNN, self).__init__()
         assert num_layers >= 1, 'At least one DCRNN layer in the Encoder.'
         self.node_num = node_num
         self.input_dim = dim_in
         self.num_layers = num_layers
         self.dcrnn_cells = nn.ModuleList()
-        self.dcrnn_cells.append(AGCRNCell(node_num, dim_in, dim_out, cheb_k, embed_dim))
+        self.dcrnn_cells.append(FixedSparseAGCRNCell(node_num, dim_in, dim_out, cheb_k, embed_dim))
         for _ in range(1, num_layers):
-            self.dcrnn_cells.append(AGCRNCell(node_num, dim_out, dim_out, cheb_k, embed_dim))
+            self.dcrnn_cells.append(FixedSparseAGCRNCell(node_num, dim_out, dim_out, cheb_k, embed_dim))
 
-    def forward(self, x, init_state, node_embeddings):
+    def forward(self, x, init_state, node_embeddings, limiting_k):
         #shape of x: (B, T, N, D)
         #shape of init_state: (num_layers, B, N, hidden_dim)
         assert x.shape[2] == self.node_num and x.shape[3] == self.input_dim
@@ -25,7 +25,7 @@ class AVWDCRNN(nn.Module):
             state = init_state[i]
             inner_states = []
             for t in range(seq_length):
-                state = self.dcrnn_cells[i](current_inputs[:, t, :, :], state, node_embeddings)
+                state = self.dcrnn_cells[i](current_inputs[:, t, :, :], state, node_embeddings, limiting_k)
                 inner_states.append(state)
             output_hidden.append(state)
             current_inputs = torch.stack(inner_states, dim=1)
@@ -39,10 +39,11 @@ class AVWDCRNN(nn.Module):
         for i in range(self.num_layers):
             init_states.append(self.dcrnn_cells[i].init_hidden_state(batch_size))
         return torch.stack(init_states, dim=0)      #(num_layers, B, N, hidden_dim)
+    
 
-class AGCRN(nn.Module):
+class FixedSparseAGCRN(nn.Module):
     def __init__(self, args):
-        super(AGCRN, self).__init__()
+        super(FixedSparseAGCRN, self).__init__()
         self.num_node = args.num_nodes
         self.input_dim = args.input_dim
         self.hidden_dim = args.rnn_units
@@ -50,10 +51,13 @@ class AGCRN(nn.Module):
         self.horizon = args.horizon
         self.num_layers = args.num_layers
 
+        # NEW
+        self.limiting_k = args.limiting_k
+
         self.default_graph = args.default_graph
         self.node_embeddings = nn.Parameter(torch.randn(self.num_node, args.embed_dim), requires_grad=True)
 
-        self.encoder = AVWDCRNN(args.num_nodes, args.input_dim, args.rnn_units, args.cheb_k,
+        self.encoder = FixedSparseAVWDCRNN(args.num_nodes, args.input_dim, args.rnn_units, args.cheb_k,
                                 args.embed_dim, args.num_layers)
 
         #predictor
@@ -65,7 +69,7 @@ class AGCRN(nn.Module):
         #supports = F.softmax(F.relu(torch.mm(self.nodevec1, self.nodevec1.transpose(0,1))), dim=1)
 
         init_state = self.encoder.init_hidden(source.shape[0])
-        output, _ = self.encoder(source, init_state, self.node_embeddings)      #B, T, N, hidden
+        output, _ = self.encoder(source, init_state, self.node_embeddings, self.limiting_k)      #B, T, N, hidden
         output = output[:, -1:, :, :]                                   #B, 1, N, hidden
 
         #CNN based predictor

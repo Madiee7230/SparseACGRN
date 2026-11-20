@@ -3,7 +3,7 @@ from pyrosm import OSM
 import math
 
 def load_location_features(df, pbf_path, radius_m):
-    # df has columns lat, lon, region
+    # df has columns lat, lon
     osm = OSM(pbf_path)
     nodes, edges = osm.get_network(network_type="driving", nodes=True)
 

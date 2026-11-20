@@ -15,7 +15,7 @@ class SparseLoss(nn.Module):
 
 
 
-# # Example Usage
+# # Example Usage (NOT FOR Base, FixedSparse)
 # model = AGCRN()
 # criterion = SparseLoss
 # preds, limitingks = model(inputs)
