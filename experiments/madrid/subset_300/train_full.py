@@ -7,8 +7,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from torch.utils.data import DataLoader
 
-from experiments.madrid_loader import MadridDataset
-from model.BaseAGCRN.AGCRN import AGCRN
+from experiments.madrid.subset_300.madrid_loader import MadridDataset
+from model.BaseAGCRN.BaseAGCRN import BaseAGCRN
 
 torch.manual_seed(42)
 torch.set_num_threads(4)
@@ -20,7 +20,7 @@ device = torch.device("cuda")
 save_dir = Path("experiments/results/base_agcrn_64x2")
 save_dir.mkdir(parents=True, exist_ok=True)
 
-data_dir = Path(__file__).resolve().parents[1] / "datasets/madrid/processed"
+data_dir = Path(__file__).resolve().parents[3] / "datasets/madrid/subset_300/processed"
 with open(data_dir / "metadata.json") as f:
     std = json.load(f)["std"]
 
@@ -46,7 +46,7 @@ args = SimpleNamespace(
     cheb_k=2
 )
 
-model = AGCRN(args)
+model = BaseAGCRN(args)
 
 for p in model.parameters():
     if p.dim() > 1:

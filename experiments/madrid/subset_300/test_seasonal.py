@@ -3,7 +3,7 @@ import json
 import numpy as np
 from pathlib import Path
 
-data_dir = Path(__file__).resolve().parents[1] / "datasets/madrid/processed"
+data_dir = Path(__file__).resolve().parents[3] / "datasets/madrid/subset_300/processed"
 
 traffic = np.load(data_dir / "traffic_normalized.npy")
 

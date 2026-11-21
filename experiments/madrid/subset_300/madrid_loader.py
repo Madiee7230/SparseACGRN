@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-data_dir = Path(__file__).resolve().parents[1] / "datasets/madrid/processed"
+data_dir = Path(__file__).resolve().parents[3] / "datasets/madrid/subset_300/processed"
 
 
 class MadridDataset(Dataset):

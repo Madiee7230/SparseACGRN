@@ -4,7 +4,7 @@ import json
 import h5py
 import numpy as np
 
-root = Path(__file__).resolve().parents[1] / "datasets/madrid"
+root = Path(__file__).resolve().parents[3] / "datasets/madrid/subset_300"
 data_dir = root / "raw/subset_300"
 save_dir = root / "processed"
 save_dir.mkdir(parents=True, exist_ok=True)

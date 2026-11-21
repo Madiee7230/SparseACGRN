@@ -4,9 +4,9 @@ import torch
 from pathlib import Path
 from torch.utils.data import DataLoader
 
-from experiments.madrid_loader import MadridDataset
+from experiments.madrid.subset_300.madrid_loader import MadridDataset
 
-data_dir = Path(__file__).resolve().parents[1] / "datasets/madrid/processed"
+data_dir = Path(__file__).resolve().parents[3] / "datasets/madrid/subset_300/processed"
 
 with open(data_dir / "metadata.json") as f:
     std = json.load(f)["std"]

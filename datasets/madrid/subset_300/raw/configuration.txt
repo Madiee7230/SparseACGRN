@@ -1,0 +1,155 @@
+{
+    "n_clusters": null,
+    "freq_resample": null,
+    "min_records": 2000,
+    "quantile": 0.95,
+    "global_quantile": 0.98,
+    "window": "5h",
+    "multiplier_global_quantile": 1.5,
+    "multiplier_quantile": 2,
+    "threshold": 12,
+    "threshold_factor": 2,
+    "consecutive_days": 4,
+    "years": [
+        2022,
+        2023,
+        2024
+    ],
+    "months": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+    ],
+    "date_range": [
+        [
+            2022,
+            6
+        ],
+        [
+            2022,
+            7
+        ],
+        [
+            2022,
+            8
+        ],
+        [
+            2022,
+            9
+        ],
+        [
+            2022,
+            10
+        ],
+        [
+            2022,
+            11
+        ],
+        [
+            2022,
+            12
+        ],
+        [
+            2023,
+            1
+        ],
+        [
+            2023,
+            2
+        ],
+        [
+            2023,
+            3
+        ],
+        [
+            2023,
+            4
+        ],
+        [
+            2023,
+            5
+        ],
+        [
+            2023,
+            6
+        ],
+        [
+            2023,
+            7
+        ],
+        [
+            2023,
+            8
+        ],
+        [
+            2023,
+            9
+        ],
+        [
+            2023,
+            10
+        ],
+        [
+            2023,
+            11
+        ],
+        [
+            2023,
+            12
+        ],
+        [
+            2024,
+            1
+        ],
+        [
+            2024,
+            2
+        ],
+        [
+            2024,
+            3
+        ],
+        [
+            2024,
+            4
+        ],
+        [
+            2024,
+            5
+        ],
+        [
+            2024,
+            6
+        ],
+        [
+            2024,
+            7
+        ],
+        [
+            2024,
+            8
+        ],
+        [
+            2024,
+            9
+        ],
+        [
+            2024,
+            10
+        ]
+    ],
+    "output_paths": {
+        "tranning": "full_processed_data/{data_hash}/MTD_training.csv",
+        "target_month": "full_processed_data/{data_hash}/MTD_target_month.csv",
+        "complete_data": "full_processed_data/{data_hash}/MTD_complete_data.csv"
+    }
+}

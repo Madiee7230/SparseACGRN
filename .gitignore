@@ -1,0 +1,19 @@
+# Python temporary files
+__pycache__/
+*.pyc
+
+# Local training results
+experiments/results/
+
+# Madrid full: large source archive and extracted data
+datasets/madrid/full_554/raw/*.rar
+datasets/madrid/full_554/raw/0095ccde8f905222e8791d32c6f3b9dc/
+
+# LargeST California: large traffic and adjacency files
+datasets/largest/ca_8600/raw/*.h5
+datasets/largest/ca_8600/raw/*.zip
+datasets/largest/ca_8600/raw/*.npy
+
+# LargeST GBA: large traffic and adjacency files
+datasets/largest/gba_2352/raw/*.h5
+datasets/largest/gba_2352/raw/*.npy
